@@ -12,7 +12,7 @@ import com.visa.prj.entity.User;
 import com.visa.prj.service.FoodieService;
 
 @RestController
-public class FoodieController {
+public class UserController {
 	
 	private User userData;
 
