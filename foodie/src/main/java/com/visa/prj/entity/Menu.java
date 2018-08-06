@@ -1,13 +1,10 @@
 package com.visa.prj.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,17 +15,13 @@ public class Menu {
 	@Column(name="menu_id")
 	private int menuId;
 	
-	@ManyToOne
-	@JoinColumn(name="restaurant_fk")
-	private Restaurant rId;
-	
 	@Column(name="item_name")
 	private String itemName;
 	
 	private String type;
 	
-	@Column(name="veg_nonveg")
-	private String vegNonVeg;
+	
+	private boolean veg;
 	
 	private double price;
 
@@ -36,13 +29,12 @@ public class Menu {
 		super();
 	}
 
-	public Menu(int menuId, Restaurant rId, String itemName, String type, String vegNonVeg, double price) {
+	public Menu(int menuId, String itemName, String type, boolean veg, double price) {
 		super();
 		this.menuId = menuId;
-		this.rId = rId;
 		this.itemName = itemName;
 		this.type = type;
-		this.vegNonVeg = vegNonVeg;
+		this.veg = veg;
 		this.price = price;
 	}
 
@@ -52,14 +44,6 @@ public class Menu {
 
 	public void setMenuId(int menuId) {
 		this.menuId = menuId;
-	}
-
-	public Restaurant getrId() {
-		return rId;
-	}
-
-	public void setrId(Restaurant rId) {
-		this.rId = rId;
 	}
 
 	public String getItemName() {
@@ -78,12 +62,12 @@ public class Menu {
 		this.type = type;
 	}
 
-	public String getVegNonVeg() {
-		return vegNonVeg;
+	public boolean getVeg() {
+		return veg;
 	}
 
-	public void setVegNonVeg(String vegNonVeg) {
-		this.vegNonVeg = vegNonVeg;
+	public void setVeg(boolean veg) {
+		this.veg = veg;
 	}
 
 	public double getPrice() {
@@ -96,8 +80,8 @@ public class Menu {
 
 	@Override
 	public String toString() {
-		return "menu [menuId=" + menuId + ", rId=" + rId + ", itemName=" + itemName + ", type=" + type + ", vegNonVeg="
-				+ vegNonVeg + ", price=" + price + "]";
+		return "menu [menuId=" + menuId + ", itemName=" + itemName + ", type=" + type + ", veg="
+				+ veg + ", price=" + price + "]";
 	}
 
 	
