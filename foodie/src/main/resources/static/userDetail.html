@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-2.2.4.js"
+	integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+	crossorigin="anonymous"></script>
+<meta charset="ISO-8859-1">
+<title>User Details</title>
+</head>
+<body>
+	Name:<input type="text" id="name"/><br>
+	Email:<input type="text" id="email"/><br>
+	Address:<textarea rows="4" cols="50" id="address"></textarea><br>
+	<button type="button" id="addBtn">Add user</button>
+	
+	<script type="text/javascript">
+		$(function() {
+			$(document).on("click","#addBtn", function() {
+				var user = {};
+				
+				user["name"] = $("#name").val();
+				user["email"] = $("#email").val();
+				user["address"] = $("#address").val();
+				//alert(sessionStorage.getItem("user") + " purchased : " + items$);
+				alert(JSON.stringify(user));
+				$.ajax({
+				    type: 'POST',
+				    url: 'api/users',
+				    data: JSON.stringify(user),
+				    dataType: 'json',
+				    contentType:'application/json',
+				    success: function( resp ) {
+				      console.log( resp );
+				    }
+				  });
+			});
+		});
+	</script>
+</body>
+</html>
