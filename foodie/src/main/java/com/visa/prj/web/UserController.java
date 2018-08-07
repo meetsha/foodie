@@ -21,14 +21,14 @@ public class UserController {
 	
 	@RequestMapping(value="userDirect.do")
 	public String directUser() {
-		return "user.jsp";
+		return "userDetail.html";
 	}
 	
 	@RequestMapping(value="api/users", method=RequestMethod.POST)
-	public ResponseEntity<User> placeOrder(@RequestBody User user) {
-		foodieService.addUser(user);
+	public void placeOrder(@RequestBody User user) {
+		//foodieService.addUser(user);
 		userData = user;
-		System.out.println(userData.getName());
-		return new ResponseEntity<User>(user,HttpStatus.CREATED);
+		//System.out.println(userData.getName());
+		//return "restaurants.html";
 	}
 }
