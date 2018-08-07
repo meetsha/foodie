@@ -1,5 +1,6 @@
 package com.visa.prj.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -94,6 +95,15 @@ public class FoodieService {
 	public void addOrder(Order order) {
 		orderDao.save(order);
 	}
+	
+	public List<Order> getOrdersByDate(Date date) {
+		return orderDao.getOrdersByDate(date);
+	}
+	
+	public List<Order> getOrdersByRange(Date date1, Date date2) {
+		return orderDao.getOrdersByRange(date1, date2);
+	}
+	
 	@Autowired
 	private MenuDao menuDao;
 	
