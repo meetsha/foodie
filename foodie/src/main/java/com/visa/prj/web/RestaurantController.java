@@ -41,7 +41,7 @@ public class RestaurantController {
 	}
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public @ResponseBody Restaurant getRestaurant(@PathVariable("id") int id) {
-		return foodService.getById(id);
+		return foodService.getResById(id);
 	}
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Restaurant> addRestaurant(@RequestBody Restaurant restaurant) {
