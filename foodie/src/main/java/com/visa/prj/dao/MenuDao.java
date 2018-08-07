@@ -12,7 +12,7 @@ public interface MenuDao extends JpaRepository<Menu, Integer> {
 	
 	
 	
-	@Query("from Menu m where m.veg = veg")
+	@Query("from Menu m where m.veg = :veg")
 	List<Menu> getAvailableVegItems(@Param("veg") boolean veg);
 	
 	
