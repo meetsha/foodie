@@ -6,17 +6,43 @@
 	crossorigin="anonymous"></script>
 <meta charset="ISO-8859-1">
 <title>User Details</title>
+<style>
+	.error{
+		color:red;
+	}
+	#errorName,#errorEmail,#errorAddress{
+		visibility:hidden;
+	}
+</style>
 </head>
 <body>
-	Name:<input type="text" id="name"/><br>
-	Email:<input type="text" id="email"/><br>
-	Address:<textarea rows="4" cols="50" id="address"></textarea><br>
+	Name:<input type="text" id="name"/><span class="error show" id="errorName" name="name">Please fill name</span><br>
+	Email:<input type="text" id="email"/><span class="error show" id="errorEmail" name="email">Please fill email</span><br>
+	Address:<textarea rows="4" cols="50" id="address"></textarea><span class="error" id="errorAddress" name="address">Please fill address</span><br>
 	<button type="button" id="addBtn">Add user</button>
 	
 	<script type="text/javascript">
 		$(function() {
 			$(document).on("click","#addBtn", function() {
-				var user = {};
+				localStorage.setItem("name",$("#name").val());
+				localStorage.setItem("email",$("#email").val());
+				localStorage.setItem("address",$("#address").val());
+				var flag = true;
+				
+				$(".error").each(function(){
+					var id= "#"+$(this).attr("name");
+					//alert(id);
+					console.log($(id).attr("type"));
+					if(!$(id).val()){
+						$(this).css("visibility","visible");
+						flag = false;
+						//console.log($(this).html());
+					}
+					if(flag){
+						window.location.replace("restaurants.html");
+					}
+				});
+				/* var user = {};
 				
 				user["name"] = $("#name").val();
 				user["email"] = $("#email").val();
@@ -32,7 +58,7 @@
 				    success: function( resp ) {
 				      console.log( resp );
 				    }
-				  });
+				  }); */
 			});
 		});
 	</script>
