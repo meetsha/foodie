@@ -2,12 +2,23 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Menu page</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 <script src="https://code.jquery.com/jquery-2.2.4.js"
 	integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
 	crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js">
 </script>
+<style type="text/css">
+	.card{
+	height:25px;
+	border:solid green;
+	background:green;
+	padding:2px;
+	margin:4px;
+	}
+</style>
 </head>
 <body>
 	<div id="items"></div>
@@ -24,7 +35,8 @@
 			
 			var menutpl$;
 			var ordertmpl$;
-			$.getJSON("http://localhost:8080/api/menu", function(menu) {
+			var get_url = "http://localhost:8080/api/restaurants/" + sessionStorage.getItem("restaurantId");
+			$.getJSON(get_url, function(menu) {
 				menu_items = menu;
 				$.get("templates/menutmpl.html",function(templ) {
 					 menutpl$ = templ;
