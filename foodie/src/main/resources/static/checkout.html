@@ -11,7 +11,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
-	
+
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js">
 	
@@ -22,8 +22,7 @@
 		<div class="container fm-panel fm-checkout">
 			<h4>Checkout</h4>
 			<div class="row">
-				<div id="addr" class="col-md-6">
-				</div>
+				<div id="detl" class="col-md-6"></div>
 				<div class="col-md-6">
 					<h5>Payment:</h5>
 					<div class="control-group">
@@ -60,17 +59,17 @@
 				</div>
 				<div class="fm-right">
 					<a href class="btn btn-danger">Clear Cart</a>
-					<button class="btn btn-primary">Purchase</button>
+					<button class="btn btn-primary" id="bang">Purchase</button>
 				</div>
 			</div>
 		</div>
 	</form>
-	
+
 	<script type="text/javascript">
 		$(function() {
-			var addr$ = $("#addr");
+			var detl$ = $("#detl");
 			var item$ = $("#items");
-			var addr_tmpl$;
+			var detl_tmpl$;
 			var item_tmpl$;
 			
 			$.get("templates/detail.html", function(tmpl) {
@@ -79,10 +78,33 @@
 				console.log(name + address);
 				var content = {name, address};
 				
-				addr_tmpl$ = tmpl;
-				var content = Mustache.render(addr_tmpl$, content);
-				addr$.html(content);
+				detl_tmpl$ = tmpl;
+				var content = Mustache.render(detl_tmpl$, content);
+				detl$.html(content);
 			})
+			
+			$(document).on("click", "#bang", function() {
+				var user = {};
+				user["name"] = localStorage.getItem("name");
+				user["email"] = localStorage.getItem("email");
+				user["address"] = localStorage.getItem("address");
+				//alert(sessionStorage.getItem("user") + " purchased : " + items$);
+				alert(JSON.stringify(user));
+				$.ajax({
+				    type: 'POST',
+				    url: 'api/users',
+				    data: JSON.stringify(user),
+				    dataType: 'json',
+				    contentType:'application/json',
+				    success: function( resp ) {
+				      console.log( resp );
+				    }
+				}); 
+				
+				var order = {};
+				
+				
+			});
 			
 		})
 	</script>

@@ -55,6 +55,11 @@ public class FoodieService {
 		r.setMenu_items(menu_items);
 	}	
 
+	public List<Menu> getRestMenu(int id) {
+		Restaurant r = resDao.findById(id).get();
+		return r.getMenu_items();
+	}
+	
 	@Autowired
 	private UserDao userDao;
 	
@@ -108,8 +113,13 @@ public class FoodieService {
 	private MenuDao menuDao;
 	
 	@Transactional
-	public void addMenuItem(Menu menu) {
+	public void addMenuItem(Menu menu, int id) {
+		List<Menu> items = getRestMenu(id);
+		items.add(menu);
+		addMenu(items, id);
 		menuDao.save(menu);
+		
+		
 	}
 	
 	public Menu getMenuById(int id) {
