@@ -11,7 +11,7 @@
 </script>
 <style type="text/css">
 	.card{
-	height:50px;
+	height:25px;
 	border:solid green;
 	background:green;
 	padding:2px;
@@ -23,34 +23,41 @@
 		
 			
 		function check() {
+			var rsts$ = $("#rsts");
+			var rstsTempll$;
+
 		   if( document.getElementById("Chinese").checked)
 		    	{
 			   var cuisine ="chinese";
-			   var link = 'api/restaurants/cuisine?cuisine=chinese';
-			   
+			  // var link = 'api/restaurants/cuisine?cuisine=chinese';
+			   var link="http://localhost:8080/api/restaurants/cuisine?cuisine=chinese"
 		    	}
 		   else if( document.getElementById("Italian").checked)
 	    	{
 	    	
 			var cuisine ="italian";
-			var link = 'api/restaurants/cuisine?cuisine=italian';
-			
+			//var link = 'api/restaurants/cuisine?cuisine=italian';
+			var link="http://localhost:8080/api/restaurants/cuisine?cuisine=italian"
 			 
 	    	}
-		   $.ajax({
-			    type: 'GET',
-			    url: link,
-			  //  data: JSON.stringify(cuisine),
-			    dataType: 'json',
-			    contentType:'application/json',
-			    
-			    success: function( resp ) {
-			      console.log( resp );
-			    }
-			  });
+		   else if( document.getElementById("Indian").checked)
+	    	{
+	    	
+			var cuisine ="indian";
+			//var link = 'api/restaurants/cuisine?cuisine=indian';
+			var link="http://localhost:8080/api/restaurants/cuisine?cuisine=indian"
+			 
+	    	}
+		  
 		    	
 		    	
-		   
+		   $.getJSON(link, function(restaurants) {
+				$.get("templates/restaurant.html",function(templ) {
+					 rstsTempl1$ = templ;
+					 var content = Mustache.render(rstsTempl1$, restaurants);
+					 rsts$.html(content);
+				 }); 
+			});
 	    	
 	    	
 		    	
@@ -85,9 +92,9 @@
 
 				
 			
-		<div class="col-lg-6 card">
+		<div class="col-lg-6 card pull-right">
 	<div id="rsts"></div>
-		<div id="rstsl"></div>
+		<div id="rsts5"></div>
 	
 <script type="text/javascript">
 		$(function() {
