@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.visa.prj.dao.MenuDao;
 import com.visa.prj.entity.Menu;
 import com.visa.prj.service.FoodieService;
 
