@@ -1,6 +1,7 @@
 package com.visa.prj.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="orders")
@@ -24,6 +27,18 @@ public class Order {
 	
 	private double total;
 	
+	@Column(name="order_date")
+	@Temporal(TemporalType.DATE)
+	private Date orderDate = new Date();
+	
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="restaurant_fk")
 	private Restaurant restaurant;

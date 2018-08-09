@@ -23,25 +23,26 @@
 	
 	<script type="text/javascript">
 		$(function() {
+			
 			$(document).on("click","#addBtn", function() {
 				localStorage.setItem("name",$("#name").val());
 				localStorage.setItem("email",$("#email").val());
 				localStorage.setItem("address",$("#address").val());
-				var flag = true;
+				var flag = 0;
 				
 				$(".error").each(function(){
 					var id= "#"+$(this).attr("name");
-					//alert(id);
-					console.log($(id).attr("type"));
 					if(!$(id).val()){
 						$(this).css("visibility","visible");
-						flag = false;
-						//console.log($(this).html());
+						flag++;
 					}
-					if(flag){
+				});
+				 if(flag === 0){
+						//console.log(flag);
 						window.location.replace("restaurants.html");
 					}
 				});
+		});
 				/* var user = {};
 				
 				user["name"] = $("#name").val();
@@ -59,8 +60,7 @@
 				      console.log( resp );
 				    }
 				  }); */
-			});
-		});
+		
 	</script>
 </body>
 </html>
