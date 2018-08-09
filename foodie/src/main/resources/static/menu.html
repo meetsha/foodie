@@ -37,10 +37,11 @@
 			var ordertmpl$;
 			var get_url = "http://localhost:8080/api/restaurants/" + sessionStorage.getItem("restaurantId");
 			$.getJSON(get_url, function(menu) {
-				menu_items = menu;
+				menu_items = menu["menu_items"];
+				console.log(menu_items);
 				$.get("templates/menutmpl.html",function(templ) {
 					 menutpl$ = templ;
-					 var content = Mustache.render(menutpl$, menu);
+					 var content = Mustache.render(menutpl$, menu_items);
 					 items$.html(content);
 				 }); 
 				
