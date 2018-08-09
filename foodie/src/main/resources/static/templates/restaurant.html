@@ -1,25 +1,27 @@
 
 
-<table>
-	<tr>
-		<th>ID</th>
-		<th>Name</th>
-		<th>Address</th>
+<table style="width:100%">
+	<tr class="spaceUnder">
+	<th></th>
+		
 		<th>Description</th>
 		<th>Rating</th>
-		<th>Cuisine</th>
-		<th>Pure Veg</th>
 		<th>Select</th>
 	</tr>
 	{{#.}}
 	<tr>
-		<td>{{restaurantId}}</td>
-		<td>{{restaurantName}}</td>
-		<td>{{restaurantAddress }}</td>
-		<td>{{ description }}</td>
+	<td>
+	{{restaurantName}}
+		<br>
+	<img src="images/{{restaurantId}}.jpg" style="width:50px;height:50px">
+            
+        
+	</td>
+	
+		<td>
+		{{description}}
+		</td>
 		<td>{{ rating }}</td>
-		<td>{{ cuisine }}</td>
-		<td>{{ pureveg }}</td>
 		<td> <button class="addBtn" type="button" value="{{restaurantId}}"> Select Restaurant </button> </td>
 	</tr>
 	{{/.}}
