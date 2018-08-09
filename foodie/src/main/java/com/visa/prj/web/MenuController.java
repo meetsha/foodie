@@ -30,9 +30,9 @@ public class MenuController {
 	}
 	
 	
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Menu> placeOrder(@RequestBody Menu menu) {
-		foodService.addMenuItem(menu);
+	@RequestMapping(value="/{id}", method=RequestMethod.POST)
+	public ResponseEntity<Menu> placeOrder(@RequestBody Menu menu, @RequestParam("id") int id) {
+		foodService.addMenuItem(menu, id);
 		 return new ResponseEntity<Menu>(menu,HttpStatus.CREATED);
 	}
 
