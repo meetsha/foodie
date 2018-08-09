@@ -1,0 +1,19 @@
+<table>
+	<tr>
+		<th>MenuID</th>
+		<th>ItemName</th>
+		<th>price</th>
+		<th>Pure Veg</th>
+		<th>Select</th>
+	</tr>
+	{{#.}}
+	<tr>
+		<td>{{menuId}}</td>
+		<td>{{itemName}}</td>
+		<td>{{price}}</td>
+		<td>{{ veg }}</td>
+		<td> <button type="button" class="items"  value="{{menuId}};{{price}};{{itemName}}" > Select  </button></td>
+	</tr>
+	{{/.}}
+</table>
+

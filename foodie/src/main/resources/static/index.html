@@ -1,10 +1,73 @@
-<!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Index</title>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<style>
+			/* Container holding the image and the text */
+html,body{
+	width=100%;
+	height=100%;
+	margin:0px 0px 0px 0px;
+}
+p{
+	display: inline;
+}
+.container {
+    position: relative;
+width:100%;
+height:100%;
+}	
+
+.text-block, .text-head{
+    position: absolute;
+    background-color: transparent;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.text-block{
+	bottom: 20px;
+    	left: 35%;
+	font-size: 35px;
+}
+.text-head{
+	top: 10px;
+    	left: 40%;
+	font-size: 45px;
+}
+.userDiv{
+	position: absolute;
+	right:3%;
+	top:8%;
+	height: 12%;
+	width:8%;
+}
+img{
+width:100%;
+height:100%;
+}
+</style>
 </head>
 <body>
-	<a href="userDetail.html">Go to user page</a>
-</body>
+  <div class="container">
+   <img src="pizza.jpg" alt="Norway"  class="img-responsive" id="bgImage">
+  </div>
+  <div class="text-head"> 
+    <p><i>Foodie</i></p>
+  </div>
+  <div class="text-block"> 
+    <p><i>"The craving for Food ends Here"</i></p>
+  </div>
+  <div class="userDiv">
+	<a href="userDetail.html"><img src="user.jpg" alt="user"></a>
+  </div>
+<script>
+	var count = 0;
+	var imgArray = [ "pizza.jpg", "burger.jpg", "chicken.jpg" ];
+	setInterval(function () {
+        	$("#bgImage").attr("src",imgArray[count%3]);
+		count=count+1;
+   	 },3000);
+</script>
+	</body>
 </html>

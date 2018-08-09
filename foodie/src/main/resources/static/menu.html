@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-2.2.4.js"
+	integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+	crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js">
+</script>
+</head>
+<body>
+	<div id="items"></div>
+	<div id="orders"></div>
+	<script type="text/javascript">
+		$(function() {
+			var items$ = $("#items");
+			var orders$ = $("#orders");
+			var menuId;
+			var price;
+			var cart = new Map();
+			var cart2 = [];
+			var menu_items;
+			
+			var menutpl$;
+			var ordertmpl$;
+			$.getJSON("http://localhost:8080/api/menu", function(menu) {
+				menu_items = menu;
+				$.get("templates/menutmpl.html",function(templ) {
+					 menutpl$ = templ;
+					 var content = Mustache.render(menutpl$, menu);
+					 items$.html(content);
+				 }); 
+				
+				
+			});
+			// $("#addBtn").click()
+			// handle button click
+			
+		
+			
+			$(document).on("click",".items", function() {
+				var data = this.value.split(";");
+				var item = { };
+				item.menuId = data[0];
+				item.price = data[1];
+				item.itemName = data[2];
+				
+				if(cart.get(item.menuId) === undefined)
+					{
+					cart.set(item.MenuId, [item.itemName,item.price,1]);
+					cart2 
+					}
+				else
+					{
+					//cart.set(item.menuId, cart.get(item.menuId)+1);
+					cart.set(item.menuId, [item.itemName,item.price,cart.get(item.itemName)+1]);
+					}
+				
+				console.log(cart);
+				
+				sessionStorage.setItem("cart", cart);
+				
+				
+				console.log(menu_items);
+				var data_comb = Array.from(cart);
+				var str = "<table border=1>"
+					for (var i=0; i<data_comb.length; i++) {
+					    str += "<tr><td colspan=\"2\">" + data_comb[i] + "</td></tr>";
+					}
+					str += "</table>";
+					
+				/*$.get("templates/menuorder.html", function(templ) {
+					ordertmpl$ = templ;
+					var content =  Mustache.render(ordertmpl$, data_comb);
+					orders$.html(content);
+					
+					
+				});*/
+				
+				orders$.html(str);
+
+				
+			});
+		});
+	</script>
+</body>
+</html>
