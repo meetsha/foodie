@@ -112,6 +112,7 @@
 			$(document).on("click",".addBtn", function() {
 				sessionStorage.setItem("restaurantId", $(this).val());
 				console.log($(this).val())
+				window.location.replace("menu.html");
 			});
 		});
 	</script>
