@@ -55,9 +55,9 @@ background-image: url("images/backg.jpg");}
 		$(function() {
 			
 			$(document).on("click","#addBtn", function() {
-				localStorage.setItem("name",$("#name").val());
-				localStorage.setItem("email",$("#email").val());
-				localStorage.setItem("address",$("#address").val());
+				sessionStorage.setItem("name",$("#name").val());
+				sessionStorage.setItem("email",$("#email").val());
+				sessionStorage.setItem("address",$("#address").val());
 				var flag = 0;
 				
 				$(".error").each(function(){

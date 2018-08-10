@@ -1,13 +1,29 @@
-<table>
+
+<style type="text/css">
+td
+{
+    padding:0 15px 0 15px;
+}
+.abc{
+	height:35px;
+	padding:20px;
+	cell-spacing:5px;
+	margin:4px;
+	width: 800px;
+	
+	}
+</style>
+
+<table class="abc" style="width:800px" >
 	<tr>
-		<th>MenuID</th>
+		<th>MenuID1</th>
 		<th>ItemName</th>
 		<th>price</th>
 		<th>Pure Veg</th>
 		<th>Select</th>
 	</tr>
 	{{#.}}
-	<tr>
+	<tr >
 		<td>{{menuId}}</td>
 		<td>{{itemName}}</td>
 		<td>{{price}}</td>
@@ -17,3 +33,5 @@
 	{{/.}}
 </table>
 
+
+<!--  cellpadding="50" cellspacing="50"  -->
