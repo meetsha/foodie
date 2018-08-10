@@ -23,6 +23,7 @@
 <body>
 	<div id="items"></div>
 	<div id="orders"></div>
+	<button type="button" class="toCheckout">Checkout</button>
 	<script type="text/javascript">
 		$(function() {
 			var items$ = $("#items");
@@ -94,6 +95,10 @@
 				orders$.html(str);
 
 				
+			});
+
+			$(document).on("click",".toCheckout", function() {
+				window.location.replace("checkout.html");
 			});
 		});
 	</script>
