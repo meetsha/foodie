@@ -73,7 +73,8 @@
 				
 				console.log(cart);
 				
-				sessionStorage.setItem("cart", cart);
+				var data_comb = Array.from(cart);
+				sessionStorage.setItem("cart", JSON.stringify(data_comb));
 				
 				
 				console.log(menu_items);

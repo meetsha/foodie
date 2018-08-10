@@ -55,10 +55,13 @@ public class Order {
 		
 	}
 	
-	public Order(int orderId, double total, Restaurant restaurant, User user, List<LineItem> items) {
+	
+
+	public Order(int orderId, double total, Date orderDate, Restaurant restaurant, User user, List<LineItem> items) {
 		super();
 		this.orderId = orderId;
 		this.total = total;
+		this.orderDate = orderDate;
 		this.restaurant = restaurant;
 		this.user = user;
 		this.items = items;

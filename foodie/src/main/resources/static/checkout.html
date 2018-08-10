@@ -35,14 +35,12 @@
 					</div>
 					<div class="control-group">
 						<input type="text" name="ccNum" placeholder="Card number"
-							maxlength="16" required ng-pattern="/\d{16}/">
+							maxlength="16">
 					</div>
 					<span class="control-group"> <input type="text" name="ccExp"
-						placeholder="mm/yyyy" class="input-medium" maxlength="16" required
-						ng-pattern="/\d\d\/\d\d\d\d/">
+						placeholder="mm/yyyy" class="input-medium" maxlength="16" >
 					</span> <span class="control-group"> <input type="text"
-						name="ccCvc" placeholder="CVC" class="input-small" maxlength="4"
-						required ng-pattern="/\d{3,4}/">
+						name="ccCvc" placeholder="CVC" class="input-small" maxlength="4">
 					</span>
 				</div>
 				<div>
@@ -59,7 +57,7 @@
 				</div>
 				<div class="fm-right">
 					<a href class="btn btn-danger">Clear Cart</a>
-					<button class="btn btn-primary" id="bang">Purchase</button>
+					<button type="button" class="btn btn-primary" id="bang">Purchase</button>
 				</div>
 			</div>
 		</div>
@@ -73,8 +71,8 @@
 			var item_tmpl$;
 			
 			$.get("templates/detail.html", function(tmpl) {
-				var name = localStorage.getItem("name");
-				var address = localStorage.getItem("address");
+				var name = sessionStorage.getItem("name");
+				var address = sessionStorage.getItem("address");
 				console.log(name + address);
 				var content = {name, address};
 				
@@ -85,12 +83,13 @@
 			
 			$(document).on("click", "#bang", function() {
 				var user = {};
-				user["name"] = localStorage.getItem("name");
-				user["email"] = localStorage.getItem("email");
-				user["address"] = localStorage.getItem("address");
+				user["name"] = sessionStorage.getItem("name");
+				user["email"] = sessionStorage.getItem("email");
+				user["address"] = sessionStorage.getItem("address");
 				//alert(sessionStorage.getItem("user") + " purchased : " + items$);
-
-				alert(JSON.stringify(user));
+				
+				var userId;
+				
 				$.ajax({
 				    type: 'POST',
 				    url: 'api/users',
@@ -98,59 +97,65 @@
 				    dataType: 'json',
 				    contentType:'application/json',
 				    success: function( resp ) {
-				      console.log( resp );
+				      userId = resp["userId"];
 				    }
 				}); 
+
+				alert(JSON.stringify(user));
+				
 				
 				var lineItems = [];
-				var cart = sessionStorage.getItem("cart");
-				for(var prop in cart) {
+				var cart = JSON.parse(sessionStorage.getItem("cart"));
+				
+				console.log(cart, typeof cart);
+				
+				
+				for(var itemq in cart) {
+					console.log(cart[itemq]);
+					
+					var item_final = cart[itemq];
 					var item = {};
-					item["quantity"] = cart[prop].length;
-					item["price"] = 0;
-					var id = parseInt("prop");
-					var menu_url = "api/menu/" + id;
+					console.log(item_final[0], item_final[1]);
+					item["quantity"] = parseInt(item_final[1][2]);
+					item["price"] = parseInt(item_final[1][1]) * item["quantity"];
+					var menuItem = {};
+					menuItem["menuId"] = parseInt(item_final[0]);
+					item["menuItem"] = menuItem;
+					console.log(item);
+					$.ajax({
+						type: 'POST',
+						url: 'api/lineitems',
+						data: JSON.stringify(item),
+						dataType: 'json',
+						contentType:'application/json',
+						success: function( resp ) {
+							lineItems.push( resp );
+						}
+					}); 
 					
-					$.getJSON("menu_url", function(menuItem) {
-						item["price"] = menuItem["price"] * quantity;
-						item["menuItem"] = menuItem;
-						$.ajax({
-							type: 'POST',
-							url: 'api/lineitems',
-							data: JSON.stringify(item),
-							dataType: 'json',
-							contentType:'application/json',
-							success: function( resp ) {
-								console.log( resp );
-							}
-						}); 
-					});
-					
-					lineItems.add(item);
+					lineItems.push(item);
 
 				}
 
-				alert(JSON.stringify(lineItems));
+				console.log(JSON.stringify(lineItems));
 				
-				var rest_url = "api/restaurants/" + sessionStorage.getItem("restaurantId");
 				var restaurant = {};
-				$.getJSON("rest_url", function(rest_item) {
-					restaurant = rest_item;
-				});
+				restaurant["restaurantId"] = parseInt(sessionStorage.getItem("restaurantId"));
 				
 				alert(JSON.stringify(restaurant));
 				
 				var order = {};
-				order["user"] = user;
+				order["user"] = {"userId": userId};
 				order["total"] = 0;
 				order["restaurant"] = restaurant;
 				order["items"] = lineItems;
 				
 				for(var item in lineItems) {
+					
 					order["total"] += item["price"];
 				}
 
-				alert(JSON.stringify(order));
+				console.log(JSON.stringify(order));
 
 				$.ajax({
 					type: 'POST',
@@ -162,6 +167,7 @@
 						console.log(resp)
 					}
 				})
+				
 				
 				
 			});
