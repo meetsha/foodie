@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>admin page</title>
+<script src="https://code.jquery.com/jquery-2.2.4.js"
+	integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+	crossorigin="anonymous"></script>
+</head>
+<body>
+		<div>
+			Add Restaurant <input type="text" id ="restaurantName"/><button type="button" onclick="addName()">Add</button><br>
+		</div>
+		<div>
+			Add Address<textarea rows="4" cols="50" id="address"></textarea><button type="button" onclick="addAddress()">Add</button><br>
+		</div>
+		<div>
+			Add Menu<input type="text"  id="restaurantMenu"/><button type="button" onclick="addMenu()">Add</button><br>
+		</div>
+		<div>
+			Add Cuisine<input type="text" id="cuisine"/><button type="button" onclick="addCuisine()">Add</button><br>
+		</div>
+		<div>
+			Add Description<input type="text" id="desc"/><button type="button" onclick="addDesc()">Add</button><br>
+		</div>
+		<div>
+			Pure Vegs<input type="text" id="pureveg"/><button type="button" onclick="addpureveg()">Add</button><br>
+		</div>
+		<button type="button" onclick="disp()">submit</button>
+		<script>
+			var resJson = {"restaurantName":"",
+						"rating":4,
+						"restaurantAddress":"",
+						"cuisine":"",
+						"description":"",
+						"pureveg":"",
+						"menu_items":[]
+						};
+			//var resMenu ={ "menu":[] };
+			function addName(){
+				resJson["restaurantName"] = document.getElementById("restaurantName").value;
+			}
+			function addAddress(){
+				resJson["restaurantAddress"] = document.getElementById('address').value;
+			}
+			function addMenu(){
+				//resJson["menu_items"].push(document.getElementById("restaurantMenu").value);
+				resJson["menu_items"] = [];
+			}
+			function addCuisine(){
+				resJson["cuisine"] = document.getElementById("cuisine").value;
+			}
+			function addDesc(){
+				resJson["description"] = document.getElementById("desc").value;
+			}
+			function addpureveg(){
+				//resJson["pureveg"] = document.getElementById("pureveg").value;
+				resJson["pureveg"] = true;
+			}
+			function disp(){
+				 $.ajax({
+				    type: 'POST',
+				    url: 'api/restaurants',
+				    data: JSON.stringify(resJson),
+				    dataType: 'json',
+				    contentType:'application/json',
+				    success: function( resp ) {
+				      console.log( resp );
+				    }
+				  }); 
+				console.log(resJson);
+			}
+		</script>
+</body>
+</html>
