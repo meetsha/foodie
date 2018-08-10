@@ -1,0 +1,19 @@
+<table>
+	<tr>
+		<th>OrderID</th>
+		<th>Total</th>
+		<th>Restaurant</th>
+		<th>User</th>
+		<th>Order Date</th>
+	</tr>
+	{{#.}}
+	<tr>
+		<td>{{order_id}}</td>
+		<td>{{total}}</td>
+		<td>{{restaurant}}</td>
+		<td>{{ user }}</td>
+		<td>{{order_date}}</td>
+	</tr>
+	{{/.}}
+</table>
+
