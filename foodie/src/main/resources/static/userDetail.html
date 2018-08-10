@@ -4,6 +4,9 @@
 <script src="https://code.jquery.com/jquery-2.2.4.js"
 	integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
 	crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta charset="ISO-8859-1">
 <title>User Details</title>
 <style>
@@ -14,13 +17,36 @@
 		visibility:hidden;
 	}
 </style>
+<style type="text/css">
+	.card{
+	height:60px;
+	border:solid green;
+	background:green;
+	padding:2px;
+	margin:4px;
+	}
+</style>
 </head>
 <body>
-	Name:<input type="text" id="name"/><span class="error show" id="errorName" name="name">Please fill name</span><br>
-	Email:<input type="text" id="email"/><span class="error show" id="errorEmail" name="email">Please fill email</span><br>
-	Address:<textarea rows="4" cols="50" id="address"></textarea><span class="error" id="errorAddress" name="address">Please fill address</span><br>
+<div class="container">
+		<div class="row">
+		<div class="col-lg-4 card pull-left">
+		<h2>User Details</h2>
+<form>
+<div class= "user-grp">
+<label for="name">Name:</label>
+<input type="text" id="name" placeholder="Enter name"/><span class="error show" id="errorName" name="name">Please fill name</span><br></div>
+	<div class= "user-grp">
+	<label for="email">Email:</label>
+	<input type="text" id="email" placeholder="Enter email"/><span class="error show" id="errorEmail" name="email">Please fill email</span><br></div>
+	<div class= "user-grp">
+	<label for="address">Address:</label>
+	<textarea rows="4" cols="50" id="address" placeholder="Enter address"></textarea><span class="error" id="errorAddress" name="address">Please fill address</span><br></div>
 	<button type="button" id="addBtn">Add user</button>
-	
+	</form>
+	</div>
+	</div>
+	</div>
 	<script type="text/javascript">
 		$(function() {
 			

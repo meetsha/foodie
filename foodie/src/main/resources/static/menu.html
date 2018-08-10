@@ -10,20 +10,29 @@
 	crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js">
 </script>
-<!-- <style type="text/css">
+<style type="text/css">
 	.card{
-	height:25px;
+	height:35px;
 	border:solid green;
 	background:green;
-	padding:2px;
+	padding:20px;
+	cell-spacing:5px;
 	margin:4px;
+	width: 800px;
+	
 	}
-	-->
+	
 </style>
 </head>
 <body>
-	<div id="items"></div>
-	<div id="orders"></div>
+	<div id="items" class="col-lg-2 card pull-left"></div>
+	<div id="orders" class="col-lg-6 pull-right"></div>
+	<!--  </div>
+				
+		<button id="myButton" class="float-right submit-button" >Checkout</button>
+		
+		</div> -->
+	
 	<script type="text/javascript">
 		$(function() {
 			var items$ = $("#items");
@@ -38,10 +47,11 @@
 			var ordertmpl$;
 			var get_url = "http://localhost:8080/api/restaurants/" + sessionStorage.getItem("restaurantId");
 			$.getJSON(get_url, function(menu) {
-				menu_items = menu;
+				menu_items = menu["menu_items"];
+				console.log(menu_items);
 				$.get("templates/menutmpl.html",function(templ) {
 					 menutpl$ = templ;
-					 var content = Mustache.render(menutpl$, menu);
+					 var content = Mustache.render(menutpl$, menu_items);
 					 items$.html(content);
 				 }); 
 				
@@ -62,7 +72,7 @@
 				if(cart.get(item.menuId) === undefined)
 					{
 					cart.set(item.menuId, [item.itemName,item.price,1]);
-					 
+
 					}
 				else
 					{
@@ -77,9 +87,19 @@
 				
 				console.log(menu_items);
 				var data_comb = Array.from(cart);
-				var str = "<table border=1>"
+				
+				var str = "<table width=100% border=3>"
+					 
+
+					 str += "<tr><th  colspan=\"4\"> ID </th>";
+			    str += "<th colspan=\"4\">Item Name</th>";
+			    str += "<th colspan=\"4\">Price</th>";
+			    str += "<th colspan=\"4\">Quantity</th></tr>";
 					for (var i=0; i<data_comb.length; i++) {
-					    str += "<tr><td colspan=\"2\">" + data_comb[i] + "</td></tr>";
+					    str += "<tr><td  colspan=\"4\">" + data_comb[i][0] + "</td>";
+					    str += "<td colspan=\"4\">" + data_comb[i][1][0] + "</td>";
+					    str += "<td colspan=\"4\">" + data_comb[i][1][1] + "</td>";
+					    str += "<td colspan=\"4\">" + data_comb[i][1][2] + "</td></tr>";
 					}
 					str += "</table>";
 					
@@ -92,10 +112,14 @@
 				});*/
 				
 				orders$.html(str);
-
 				
+				
+				
+			   
 			});
 		});
+
+		
 	</script>
 </body>
 </html>
