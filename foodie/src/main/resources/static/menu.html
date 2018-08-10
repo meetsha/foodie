@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Menu page</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-2.2.4.js"
+	integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+	crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js">
+</script>
+<style type="text/css">
+	.card{
+	height:25px;
+	border:solid green;
+	background:green;
+	padding:2px;
+	margin:4px;
+	}
+</style>
+</head>
+<body>
+	<div id="items"></div>
+	<div id="orders"></div>
+	<script type="text/javascript">
+		$(function() {
+			var items$ = $("#items");
+			var orders$ = $("#orders");
+			var menuId;
+			var price;
+			var cart = new Map();
+			var cart2 = [];
+			var menu_items;
+			
+			var menutpl$;
+			var ordertmpl$;
+			var get_url = "http://localhost:8080/api/restaurants/" + sessionStorage.getItem("restaurantId");
+			$.getJSON(get_url, function(menu) {
+				menu_items = menu["menu_items"];
+				console.log(menu_items);
+				$.get("templates/menutmpl.html",function(templ) {
+					 menutpl$ = templ;
+					 var content = Mustache.render(menutpl$, menu_items);
+					 items$.html(content);
+				 }); 
+				
+				
+			});
+			// $("#addBtn").click()
+			// handle button click
+			
+		
+			
+			$(document).on("click",".items", function() {
+				var data = this.value.split(";");
+				var item = { };
+				item.menuId = data[0];
+				item.price = data[1];
+				item.itemName = data[2];
+				
+				if(cart.get(item.menuId) === undefined)
+					{
+					cart.set(item.menuId, [item.itemName,item.price,1]);
+			
+					}
+				else
+					{
+					//cart.set(item.menuId, cart.get(item.menuId)+1);
+					cart.set(item.menuId, [item.itemName,item.price,cart.get(item.menuId)[2]+1]);
+					}
+				
+				console.log(cart);
+				
+				sessionStorage.setItem("cart", cart);
+				
+				
+				console.log(menu_items);
+				var data_comb = Array.from(cart);
+				var str = "<table border=1>"
+					for (var i=0; i<data_comb.length; i++) {
+					    str += "<tr><td colspan=\"2\">" + data_comb[i] + "</td></tr>";
+					}
+					str += "</table>";
+					
+				/*$.get("templates/menuorder.html", function(templ) {
+					ordertmpl$ = templ;
+					var content =  Mustache.render(ordertmpl$, data_comb);
+					orders$.html(content);
+					
+					
+				});*/
+				
+				orders$.html(str);
+
+				
+			});
+		});
+	</script>
+</body>
+</html>
