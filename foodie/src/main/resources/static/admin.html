@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>admin page</title>
+<script src="https://code.jquery.com/jquery-2.2.4.js"
+	integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+	crossorigin="anonymous"></script>
+	<style>
+		#menu{
+			visibility : hidden;
+		}
+	</style>
+</head>
+<body>
+	<div id="restaurant">
+		<div>
+			Add Restaurant <input type="text" id ="restaurantName"/><br>
+		</div>
+		<div>
+			Add Address<textarea rows="4" cols="50" id="address"></textarea><br>
+		</div>
+		<div>
+			Add Cuisine<input type="text" id="cuisine"/><br>
+		</div>
+		<div>
+			Add Description<input type="text" id="desc"/><br>
+		</div>
+		<div>
+			Pure Vegs<input type="text" id="pureveg"/><br>
+		</div>
+		<button type="button" onclick="addName()">submit</button>
+	</div>
+	<div id="menu">
+		
+		Menu Item<input type="text"  id="itemName"/><br>
+		price<input type="number" id="price"/><br>
+		Type<input type ="text" id="type"/><br>
+		Veg<input type="text" id="veg"/><br>
+		<button type="button" onclick="addMenu()">Add Menu</button>
+	</div>
+		<script>
+		var rid = "";
+			var resJson = {"restaurantName":"",
+						"rating":4,
+						"restaurantAddress":"",
+						"cuisine":"",
+						"description":"",
+						"pureveg":"",
+						"menu_items":[]
+						};
+			//var resMenu ={ "menu":[] };
+			function addName(){
+				resJson["restaurantName"] = document.getElementById("restaurantName").value;
+				resJson["restaurantAddress"] = document.getElementById('address').value;
+				resJson["cuisine"] = document.getElementById("cuisine").value;
+				resJson["description"] = document.getElementById("desc").value;
+				resJson["pureveg"] = true;
+				resJson["menu_items"] = [];
+				$.ajax({
+				    type: 'POST',
+				    url: 'api/restaurants',
+				    data: JSON.stringify(resJson),
+				    dataType: 'json',
+				    contentType:'application/json',
+				    success: function( resp ) {
+				    	rid = resp["restaurantId"];
+				      console.log( rid );
+				    }
+				  });
+				disp();
+			}
+			function disp(){
+				$("#restaurant").css("visibility","hidden");
+				$("#menu").css("visibility","visible");
+				
+			}
+			function addMenu(){
+				menJson = [];
+				var temp = {};
+				temp["itemName"] = document.getElementById("itemName").value;
+				temp["price"]= parseFloat(document.getElementById("price").value);
+				temp["type"]= document.getElementById("type").value;
+				temp["veg"]= true;
+				menJson.push(temp);
+				console.log(resJson);
+				$.ajax({
+				    type: 'POST',
+				    url: 'api/menu/'+rid,
+				    data: JSON.stringify(temp),
+				    dataType: 'json',
+				    contentType:'application/json',
+				    success: function( resp ) {
+				      rid = resp["restaurant"];
+				    }
+				  });
+			}
+		</script>
+</body>
+</html>
