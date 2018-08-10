@@ -25,6 +25,7 @@
 </style>
 </head>
 <body>
+<<<<<<< HEAD
 	<div id="items" class="col-lg-2 card pull-left"></div>
 	<div id="orders" class="col-lg-6 pull-right"></div>
 	<!--  </div>
@@ -33,6 +34,11 @@
 		
 		</div> -->
 	
+=======
+	<div id="items"></div>
+	<div id="orders"></div>
+	<button type="button" class="toCheckout">Checkout</button>
+>>>>>>> fead5ac87f43bd20ba2dda2756d91ad1ef8e6d15
 	<script type="text/javascript">
 		$(function() {
 			var items$ = $("#items");
@@ -116,6 +122,10 @@
 				
 				
 			   
+			});
+
+			$(document).on("click",".toCheckout", function() {
+				window.location.replace("checkout.html");
 			});
 		});
 

@@ -89,6 +89,7 @@
 				user["email"] = localStorage.getItem("email");
 				user["address"] = localStorage.getItem("address");
 				//alert(sessionStorage.getItem("user") + " purchased : " + items$);
+
 				alert(JSON.stringify(user));
 				$.ajax({
 				    type: 'POST',
@@ -101,7 +102,66 @@
 				    }
 				}); 
 				
+				var lineItems = [];
+				var cart = sessionStorage.getItem("cart");
+				for(var prop in cart) {
+					var item = {};
+					item["quantity"] = cart[prop].length;
+					item["price"] = 0;
+					var id = parseInt("prop");
+					var menu_url = "api/menu/" + id;
+					
+					$.getJSON("menu_url", function(menuItem) {
+						item["price"] = menuItem["price"] * quantity;
+						item["menuItem"] = menuItem;
+						$.ajax({
+							type: 'POST',
+							url: 'api/lineitems',
+							data: JSON.stringify(item),
+							dataType: 'json',
+							contentType:'application/json',
+							success: function( resp ) {
+								console.log( resp );
+							}
+						}); 
+					});
+					
+					lineItems.add(item);
+
+				}
+
+				alert(JSON.stringify(lineItems));
+				
+				var rest_url = "api/restaurants/" + sessionStorage.getItem("restaurantId");
+				var restaurant = {};
+				$.getJSON("rest_url", function(rest_item) {
+					restaurant = rest_item;
+				});
+				
+				alert(JSON.stringify(restaurant));
+				
 				var order = {};
+				order["user"] = user;
+				order["total"] = 0;
+				order["restaurant"] = restaurant;
+				order["items"] = lineItems;
+				
+				for(var item in lineItems) {
+					order["total"] += item["price"];
+				}
+
+				alert(JSON.stringify(order));
+
+				$.ajax({
+					type: 'POST',
+					url: 'api/orders',
+					data: JSON.stringify(order),
+					dataType: 'json',
+					contentType: 'application/json',
+					success: function( resp ) {
+						console.log(resp)
+					}
+				})
 				
 				
 			});
